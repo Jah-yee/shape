@@ -53,6 +53,7 @@ def _run(fn, a):
 
     from shape.artifact.io import ArtifactSignatureError
     from shape.errors import ShapeError
+    from shape.security.hardening import redact_text
 
     try:
         return fn(a)
@@ -68,7 +69,7 @@ def _run(fn, a):
         ShapeError,
         zipfile.BadZipFile,
     ) as exc:
-        print(f"shape: error: {exc}", file=sys.stderr)
+        print(f"shape: error: {redact_text(str(exc))}", file=sys.stderr)
         return 2
 
 
